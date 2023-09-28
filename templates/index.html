@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pro_finansy</title>
+</head>
+<body>
+
+    <div id="message"></div>
+    <p>
+        Введите число: <br />
+        <input name="x" id="x" type="number"/>
+    </p>
+    <p>
+        Введите оператор: <br />
+        <input name="z" id="z" type="string" />
+        "+-*/"</p>
+    <p>
+        Введите число: <br />
+        <input name="y" id="y" type="number" /></p>
+
+    <button onclick="send()">Отправить</button>
+<script>
+    async function send(){
+
+        // получаем введенные данные
+        const x = document.getElementById("x").value;
+        const y = document.getElementById("y").value;
+        const z = document.getElementById("z").value;
+
+        // отправляем запрос
+        const response = await fetch("/first", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    x: Number(x),
+                    y: Number(y),
+                    z: z
+                })
+            });
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById("message").textContent = data.message;
+            }
+            else
+                console.log(response);
+    }
+</script>
+</body>
+</html>
